@@ -114,10 +114,14 @@ OPS: <span id="ops"></span>
 
 <script>
 
+let direction = "";
+
+function setDirection(dir){direction = dir;alert("方向: " + dir);}
 let games = JSON.parse(localStorage.getItem("games")) || [];
 let current = {ab:0,h:0,bb:0,tb:0};
 
 function record(type){
+  current.direction = direction;
   if(type==="single"){current.ab++;current.h++;current.tb+=1;}
   if(type==="double"){current.ab++;current.h++;current.tb+=2;}
   if(type==="triple"){current.ab++;current.h++;current.tb+=3;}
