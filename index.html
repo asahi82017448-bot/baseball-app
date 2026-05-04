@@ -3,17 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <title>野球成績アプリ</title>
-
 <style>
 body{
   font-family:sans-serif;
-  background:#0d0d0d;
-  color:white;
   margin:0;
+  background:#f4f7f5; /* 明るい背景 */
+  color:#222;
 }
 
 h1{
   text-align:center;
+  background:#2e7d32; /* グリーン */
+  color:white;
+  padding:15px;
+  margin:0;
 }
 
 .container{
@@ -21,33 +24,66 @@ h1{
 }
 
 .card{
-  background:#1a1a1a;
+  background:white;
   padding:15px;
   margin-bottom:15px;
   border-radius:15px;
+  box-shadow:0 3px 8px rgba(0,0,0,0.1);
 }
 
+/* ボタン全体 */
 button{
   width:30%;
-  padding:15px;
+  padding:18px;
   margin:5px;
+  font-size:16px;
   border:none;
-  border-radius:10px;
+  border-radius:12px;
+  font-weight:bold;
 }
 
-.hit{background:#4CAF50;}
-.out{background:#f44336;}
-.walk{background:#2196F3;}
-.main{background:#ff9800;}
+/* ヒット系（芝っぽい緑） */
+.hit{
+  background:#4caf50;
+  color:white;
+}
 
+/* アウト（土っぽい色） */
+.out{
+  background:#8d6e63;
+  color:white;
+}
+
+/* 四球（ちょい青） */
+.walk{
+  background:#42a5f5;
+  color:white;
+}
+
+/* メインボタン */
+.main{
+  background:#2e7d32;
+  color:white;
+  width:100%;
+}
+
+/* ナビ */
 .nav{
   position:fixed;
   bottom:0;
   width:100%;
-  background:#111;
+  background:white;
   display:flex;
   justify-content:space-around;
+  border-top:1px solid #ccc;
   padding:10px 0;
+}
+
+.nav button{
+  background:none;
+  color:#2e7d32;
+  font-size:14px;
+  width:auto;
 }
 </style>
 
