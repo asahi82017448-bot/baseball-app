@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>野球成績アプリ</title>
+<style>
+body{
+  font-family:sans-serif;
+  background:#0d0d0d;
+  color:white;
+  text-align:center;
+}
+h1{margin-top:10px;}
+
+button{
+  padding:15px;
+  margin:5px;
+  font-size:16px;
+  border:none;
+  border-radius:12px;
+}
+
+.hit{background:#4CAF50;}
+.out{background:#f44336;}
+.walk{background:#2196F3;}
+.main{background:#ff9800;}
+
+.card{
+  background:#1a1a1a;
+  padding:15px;
+  margin:15px;
+  border-radius:15px;
+}
+
+.list{
+  text-align:left;
+}
+</style>
+</head>
+<body>
+
+<h1>⚾ 野球成績</h1>
+
+<div class="card">
+<h3>試合開始</h3>
+<button class="main" onclick="newGame()">新しい試合</button>
+</div>
+
+<div class="card">
+<h3>打席入力</h3>
+<button class="hit" onclick="record('single')">単打</button>
+<button class="hit" onclick="record('double')">二塁打</button>
+<button class="hit" onclick="record('triple')">三塁打</button>
+<button class="hit" onclick="record('hr')">HR</button><br>
+
+<button class="walk" onclick="record('walk')">四球</button>
+<button class="out" onclick="record('out')">アウト</button>
+</div>
+
+<div class="card">
+<h3>現在の試合</h3>
+打率: <span id="avg">0.000</span><br>
+OPS: <span id="ops">0.000</span>
+</div>
+
+<div class="card list">
+<h3>試合履歴</h3>
+<ul id="history"></ul>
+</div>
+
+<script>
+let games = JSON.parse(localStorage.getItem("games")) || [];
+let current = {ab:0,h:0,bb:0,tb:0};
+
+function newGame(){
+  if(current.ab > 0 || current.bb > 0){
+    games.push(current);
+    save();
+  }
+  current = {ab:0,h:0,bb:0,tb:0};
+  update();
+}
+
+function record(type){
+  if(type==="single"){current.ab++;current.h++;current.tb+=1;}
+  if(type==="double"){current.ab++;current.h++;current.tb+=2;}
+  if(type==="triple"){current.ab++;current.h++;current.tb+=3;}
+  if(type==="hr"){current.ab++;current.h++;current.tb+=4;}
+  if(type==="walk"){current.bb++;}
+  if(type==="out"){current.ab++;}
+
+  update();
+}
+
+function update(){
+  let avg = current.h/current.ab || 0;
+  let obp = (current.h+current.bb)/(current.ab+current.bb) || 0;
+  let slg = current.tb/current.ab || 0;
+  let ops = obp + slg;
+
+  document.getElementById("avg").innerText = avg.toFixed(3);
+  document.getElementById("ops").innerText = ops.toFixed(3);
+
+  renderHistory();
+}
+
+function renderHistory(){
+  let ul = document.getElementById("history");
+  ul.innerHTML = "";
+  games.forEach((g,i)=>{
+    let avg = g.h/g.ab || 0;
+    let obp = (g.h+g.bb)/(g.ab+g.bb) || 0;
+    let slg = g.tb/g.ab || 0;
+    let ops = obp + slg;
+
+    let li = document.createElement("li");
+    li.textContent = "試合"+(i+1)+" 打率:"+avg.toFixed(3)+" OPS:"+ops.toFixed(3);
+    ul.appendChild(li);
+  });
+}
+
+function save(){
+  localStorage.setItem("games", JSON.stringify(games));
+}
+
+update();
+</script>
+
+</body>
+</html>
