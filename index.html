@@ -5,17 +5,57 @@
 <title>野球成績アプリ</title>
 <style>
 body{
+  font-family:sans-serif;
   background:#0d0d0d;
   color:white;
+  margin:0;
 }
 
-button{
-  border-radius:12px;
+h1{
+  text-align:center;
+  padding:10px;
+}
+
+.container{
+  padding:15px;
 }
 
 .card{
   background:#1a1a1a;
+  padding:15px;
+  margin-bottom:15px;
   border-radius:15px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.5);
+}
+
+button{
+  width:30%;
+  padding:15px;
+  margin:5px;
+  font-size:16px;
+  border:none;
+  border-radius:12px;
+}
+
+.hit{background:#4CAF50;}
+.out{background:#f44336;}
+.walk{background:#2196F3;}
+.main{background:#ff9800;}
+
+.nav{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  background:#111;
+  display:flex;
+  justify-content:space-around;
+  padding:10px 0;
+}
+
+.nav button{
+  background:none;
+  color:white;
+  font-size:14px;
 }
 </style>
 </head>
