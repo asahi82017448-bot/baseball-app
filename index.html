@@ -67,19 +67,22 @@ button{
 
 <div class="card">
 <h3>打席入力</h3>
-<button onclick="setDirection('left')">左</button>
-<button onclick="setDirection('center')">中</button>
-<button onclick="setDirection('right')">右</button>
-<button class="hit" onclick="record('single')">単打</button>
-<button class="hit" onclick="record('double')">二塁打</button>
-<button class="hit" onclick="record('triple')">三塁打</button>
-<button class="hit" onclick="record('hr')">HR</button><br>
 
-<button class="walk" onclick="record('walk')">四球</button>
-<button class="out" onclick="record('out')">アウト</button>
-</div>
+<button class="hit" onclick="record('single','left')">単打 左</button>
+<button class="hit" onclick="record('single','center')">単打 中</button>
+<button class="hit" onclick="record('single','right')">単打 右</button><br>
 
-<div class="card">
+<button class="hit" onclick="record('double','left')">二塁打 左</button>
+<button class="hit" onclick="record('double','center')">二塁打 中</button>
+<button class="hit" onclick="record('double','right')">二塁打 右</button><br>
+
+<button class="hit" onclick="record('hr','left')">HR 左</button>
+<button class="hit" onclick="record('hr','center')">HR 中</button>
+<button class="hit" onclick="record('hr','right')">HR 右</button><br>
+
+<button class="walk" onclick="record('walk','')">四球</button>
+<button class="out" onclick="record('out','')">アウト</button>
+  
 <h3>現在の試合</h3>
 打率: <span id="avg"></span><br>
 OPS: <span id="ops"></span>
@@ -119,8 +122,19 @@ let direction = "";
 function setDirection(dir){direction = dir;alert("方向: " + dir);}
 let games = JSON.parse(localStorage.getItem("games")) || [];
 let current = {ab:0,h:0,bb:0,tb:0};
+function record(type, dir){
 
+  if(type==="single"){current.ab++;current.h++;current.tb+=1;}
+  if(type==="double"){current.ab++;current.h++;current.tb+=2;}
+  if(type==="hr"){current.ab++;current.h++;current.tb+=4;}
+  if(type==="walk"){current.bb++;}
+  if(type==="out"){current.ab++;}
+
+  current.direction = dir;
+
+  update();}
 function record(type){
+
   current.direction = direction;
   if(type==="single"){current.ab++;current.h++;current.tb+=1;}
   if(type==="double"){current.ab++;current.h++;current.tb+=2;}
