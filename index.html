@@ -116,7 +116,7 @@ OPS: <span id="ops"></span>
 </div>
 
 <script>
-
+let plays = JSON.parse(localStorage.getItem("plays")) || [];
 let direction = "";
 
 function setDirection(dir){direction = dir;alert("方向: " + dir);}
@@ -133,6 +133,20 @@ function record(type, dir){
   current.direction = dir;
 
   update();}
+  function record(type, dir){
+
+  let play = {type:type, direction:dir};
+  plays.push(play);
+  localStorage.setItem("plays", JSON.stringify(plays));
+
+  if(type==="single"){current.ab++;current.h++;current.tb+=1;}
+  if(type==="double"){current.ab++;current.h++;current.tb+=2;}
+  if(type==="hr"){current.ab++;current.h++;current.tb+=4;}
+  if(type==="walk"){current.bb++;}
+  if(type==="out"){current.ab++;}
+
+  update();
+  }
 function record(type){
 
   current.direction = direction;
@@ -166,18 +180,16 @@ function update(){
 
   renderHistory();
 }
-
 function renderHistory(){
   let ul = document.getElementById("history");
   ul.innerHTML="";
-  games.forEach((g,i)=>{
-    let avg = g.h/g.ab || 0;
-    let obp = (g.h+g.bb)/(g.ab+g.bb) || 0;
-    let slg = g.tb/g.ab || 0;
-    let ops = obp + slg;
 
+  plays.forEach((p,i)=>{
     let li = document.createElement("li");
-    li.textContent = "試合"+(i+1)+" 打率:"+avg.toFixed(3)+" OPS:"+ops.toFixed(3);
+
+    let dir = p.direction || "-";
+    li.textContent = (i+1)+"打席目: " + p.type + " (" + dir + ")";
+
     ul.appendChild(li);
   });
 }
